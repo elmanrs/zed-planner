@@ -1,84 +1,129 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zed Planner</title>
+
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #ffffff;
       color: #111;
       margin: 0;
-      padding: 0;
     }
+
     header {
-      padding: 16px 24px;
+      padding: 16px;
       border-bottom: 1px solid #eee;
-      font-weight: 600;
       font-size: 18px;
+      font-weight: 600;
     }
+
     main {
-      padding: 24px;
+      padding: 16px;
       max-width: 900px;
       margin: auto;
     }
+
     h2 {
       margin-top: 32px;
-      font-size: 18px;
+      font-size: 17px;
     }
+
     .block {
       border: 1px solid #eee;
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 12px;
       margin-top: 12px;
     }
+
     .task {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin: 6px 0;
+      margin: 8px 0;
+      font-size: 14px;
     }
+
     .task input {
       width: 16px;
       height: 16px;
     }
+
     .ai {
       background: #fafafa;
       border-right: 4px solid #ddd;
       padding: 12px;
       margin-top: 16px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>Zed Planner — برنامه‌ریزی درسی هوشمند</header>
+<header>Zed Planner — برنامه‌ریزی درسی</header>
 
 <main>
 
+  <!-- TODAY -->
   <h2>Today</h2>
   <div class="block">
     <label class="task">
-      <input type="checkbox" data-id="math" />
+      <input type="checkbox" data-id="today-math">
       ریاضی — ۶۰ دقیقه
     </label>
     <label class="task">
-      <input type="checkbox" data-id="physics" />
+      <input type="checkbox" data-id="today-physics">
       فیزیک — ۴۵ دقیقه
-    </label>
-    <label class="task">
-      <input type="checkbox" data-id="bio" />
-      زیست — ۳۰ دقیقه
     </label>
   </div>
 
+  <!-- DAILY -->
+  <h2>Daily Plan</h2>
+  <div class="block">
+    <label class="task">
+      <input type="checkbox" data-id="daily-1">
+      درس اختصاصی ۱ — ۹۰ دقیقه
+    </label>
+    <label class="task">
+      <input type="checkbox" data-id="daily-2">
+      درس اختصاصی ۲ — ۹۰ دقیقه
+    </label>
+    <label class="task">
+      <input type="checkbox" data-id="daily-review">
+      مرور — ۶۰ دقیقه
+    </label>
+  </div>
+
+  <!-- WEEKLY -->
+  <h2>Weekly Plan</h2>
+  <div class="block">
+    <p>شنبه: ریاضی، فیزیک</p>
+    <p>یکشنبه: زیست، شیمی</p>
+    <p>دوشنبه: مرور و تست</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <h2>Progress</h2>
+  <div class="block">
+    <p>⏱ ساعات مطالعه هفته: ۱۸ ساعت</p>
+    <p>✅ انجام‌شده: در حال محاسبه…</p>
+  </div>
+
+  <!-- AI -->
   <h2>AI Assistant</h2>
   <div class="ai">
-    <p><strong>تحلیل AI:</strong></p>
     <p>
-      وضعیت انجام کارها ذخیره می‌شود. در مراحل بعدی،
-      این داده‌ها برای تحلیل هوشمند استفاده خواهند شد.
+      این نسخه داده‌های واقعی را ذخیره می‌کند.
+      در فاز بعدی، AI از این اطلاعات برای تحلیل استفاده می‌کند.
     </p>
   </div>
 
@@ -88,14 +133,12 @@
   const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
   checkboxes.forEach(cb => {
-    const id = cb.dataset.id;
-    const saved = localStorage.getItem(id);
-    if (saved === "true") {
-      cb.checked = true;
-    }
+    const key = cb.dataset.id;
+    const saved = localStorage.getItem(key);
+    if (saved === "true") cb.checked = true;
 
     cb.addEventListener("change", () => {
-      localStorage.setItem(id, cb.checked);
+      localStorage.setItem(key, cb.checked);
     });
   });
 </script>
