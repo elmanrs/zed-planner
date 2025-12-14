@@ -43,14 +43,6 @@
       width: 16px;
       height: 16px;
     }
-    button {
-      background: #f5f5f5;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 8px 12px;
-      cursor: pointer;
-      margin: 4px 4px 0 0;
-    }
     .ai {
       background: #fafafa;
       border-right: 4px solid #ddd;
@@ -61,51 +53,52 @@
 </head>
 <body>
 
-  <header>Zed Planner — برنامه‌ریزی درسی هوشمند</header>
+<header>Zed Planner — برنامه‌ریزی درسی هوشمند</header>
 
-  <main>
+<main>
 
-    <h2>Today</h2>
-    <div class="block">
-      <div class="task"><input type="checkbox" /> ریاضی — ۶۰ دقیقه</div>
-      <div class="task"><input type="checkbox" /> فیزیک — ۴۵ دقیقه</div>
-      <div class="task"><input type="checkbox" /> زیست — ۳۰ دقیقه</div>
-    </div>
+  <h2>Today</h2>
+  <div class="block">
+    <label class="task">
+      <input type="checkbox" data-id="math" />
+      ریاضی — ۶۰ دقیقه
+    </label>
+    <label class="task">
+      <input type="checkbox" data-id="physics" />
+      فیزیک — ۴۵ دقیقه
+    </label>
+    <label class="task">
+      <input type="checkbox" data-id="bio" />
+      زیست — ۳۰ دقیقه
+    </label>
+  </div>
 
-    <h2>Daily Plan</h2>
-    <div class="block">
-      <div class="task"><input type="checkbox" /> درس اختصاصی ۱ — ۹۰ دقیقه</div>
-      <div class="task"><input type="checkbox" /> درس اختصاصی ۲ — ۹۰ دقیقه</div>
-      <div class="task"><input type="checkbox" /> مرور — ۶۰ دقیقه</div>
-    </div>
+  <h2>AI Assistant</h2>
+  <div class="ai">
+    <p><strong>تحلیل AI:</strong></p>
+    <p>
+      وضعیت انجام کارها ذخیره می‌شود. در مراحل بعدی،
+      این داده‌ها برای تحلیل هوشمند استفاده خواهند شد.
+    </p>
+  </div>
 
-    <h2>This Week</h2>
-    <div class="block">
-      <p>شنبه: ریاضی، فیزیک</p>
-      <p>یکشنبه: زیست، شیمی</p>
-      <p>دوشنبه: مرور</p>
-    </div>
+</main>
 
-    <h2>Progress</h2>
-    <div class="block">
-      <p>⏱ مجموع مطالعه هفته: ۱۸ ساعت</p>
-      <p>✅ انجام‌شده: ۷۵٪</p>
-      <p>⚠️ عقب‌افتاده: ۲ مورد</p>
-    </div>
+<script>
+  const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
-    <h2>AI Assistant</h2>
-    <div class="ai">
-      <p><strong>تحلیل AI:</strong></p>
-      <p>
-        برنامه این هفته متعادل است، اما روزهای میانی کمی سنگین شده‌اند.
-        پیشنهاد می‌شود یکی از بلاک‌های سنگین به آخر هفته منتقل شود.
-      </p>
-      <button>AI برنامه امروز را بازسازی کن</button>
-      <button>AI برنامه هفته را متعادل کن</button>
-      <button>AI گزارش پیشرفت بده</button>
-    </div>
+  checkboxes.forEach(cb => {
+    const id = cb.dataset.id;
+    const saved = localStorage.getItem(id);
+    if (saved === "true") {
+      cb.checked = true;
+    }
 
-  </main>
+    cb.addEventListener("change", () => {
+      localStorage.setItem(id, cb.checked);
+    });
+  });
+</script>
 
 </body>
 </html>
