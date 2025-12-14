@@ -79,6 +79,7 @@
     button.action {
       margin-top: 8px;
       padding: 6px 12px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -117,15 +118,15 @@
   <h2>Progress</h2>
   <div class="block">
     <p>⏱ ساعات مطالعه هفته: ۱۸</p>
-    <p>✅ انجام‌شده: در حال محاسبه…</p>
+    <p>✅ وضعیت: در حال پیشرفت</p>
   </div>
 </section>
 
 <section id="ai">
   <h2>AI Assistant</h2>
   <div class="block">
-    <p>سؤال برنامه‌ریزی‌ات را بنویس:</p>
-    <input id="aiInput" type="text" placeholder="مثلاً: امروز چطور درس بخونم؟">
+    <p>وضعیت یا سؤال درسی‌ات را بنویس:</p>
+    <input id="aiInput" type="text" placeholder="مثلاً: خسته‌ام یا ۴ درس دارم">
     <button class="action" onclick="askAI()">ارسال</button>
     <p id="aiResponse"></p>
   </div>
@@ -141,32 +142,49 @@
 
 <script>
   function showPage(id) {
-    document.querySelectorAll("section").forEach(section => {
-      section.classList.remove("active");
-    });
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
     document.getElementById(id).classList.add("active");
   }
 
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
     const key = cb.dataset.id;
     cb.checked = localStorage.getItem(key) === "true";
-
     cb.addEventListener("change", () => {
       localStorage.setItem(key, cb.checked);
     });
   });
 
   function askAI() {
-    const input = document.getElementById("aiInput");
-    const response = document.getElementById("aiResponse");
+    const text = document.getElementById("aiInput").value.trim();
+    const out = document.getElementById("aiResponse");
 
-    if (!input.value.trim()) {
-      response.textContent = "لطفاً یک سؤال بنویس.";
+    if (!text) {
+      out.textContent = "لطفاً چیزی بنویس.";
       return;
     }
 
-    response.textContent =
-      "این بخش آماده است. در مرحله بعد، هوش مصنوعی واقعی به آن وصل می‌شود.";
+    if (text.includes("خسته")) {
+      out.textContent =
+        "چون خسته‌ای:\n" +
+        "۱) ۴۵ دقیقه درس قوی‌تر\n" +
+        "۲) ۱۰ دقیقه استراحت\n" +
+        "۳) ۳۰ دقیقه درس سبک\n" +
+        "۴) مرور کوتاه شب";
+    } 
+    else if (text.includes("۴") || text.includes("چهار")) {
+      out.textContent =
+        "برای ۴ درس اختصاصی:\n" +
+        "دو درس سنگین صبح\n" +
+        "دو درس سبک عصر\n" +
+        "بین هر کدام استراحت کوتاه";
+    } 
+    else {
+      out.textContent =
+        "پیشنهاد کلی:\n" +
+        "شروع با درس سخت‌تر\n" +
+        "بلاک‌های ۴۵–۶۰ دقیقه\n" +
+        "استراحت منظم و مرور شب";
+    }
   }
 </script>
 
