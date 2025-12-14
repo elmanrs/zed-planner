@@ -111,7 +111,11 @@
 <section id="ai">
   <h2>AI Assistant</h2>
   <div class="block">
-    <p>در فاز بعدی، این بخش هوشمند می‌شود.</p>
+    <p>سؤال برنامه‌ریزی‌ات را بنویس:</p>
+    <input id="aiInput" type="text" placeholder="مثلاً: امروز چطور درس بخونم؟"
+           style="width:100%;padding:8px;margin-top:8px;">
+    <button onclick="askAI()" style="margin-top:8px;">ارسال</button>
+    <p id="aiResponse" style="margin-top:12px;"></p>
   </div>
 </section>
 
@@ -134,6 +138,19 @@
     cb.checked = localStorage.getItem(key) === "true";
     cb.onchange = () => localStorage.setItem(key, cb.checked);
   });
+  <script>
+  function askAI() {
+    const input = document.getElementById("aiInput").value;
+    const response = document.getElementById("aiResponse");
+
+    if (!input) {
+      response.textContent = "لطفاً یک سؤال بنویس.";
+      return;
+    }
+
+    response.textContent =
+      "من به‌زودی با هوش مصنوعی واقعی وصل می‌شوم و برایت برنامه دقیق می‌سازم.";
+  }
 </script>
 
 </body>
