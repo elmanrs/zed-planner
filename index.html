@@ -4,20 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zed Planner</title>
-<link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json">
+
   <style>
     body {
       font-family: system-ui, sans-serif;
       margin: 0;
-      background: #fff;
+      background: #ffffff;
       color: #111;
     }
 
     header {
       padding: 14px;
-      border-bottom: 1px solid #eee;
-      font-weight: 600;
       text-align: center;
+      font-weight: 600;
+      border-bottom: 1px solid #eee;
     }
 
     section {
@@ -67,6 +68,18 @@
       font-size: 12px;
       cursor: pointer;
     }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      box-sizing: border-box;
+    }
+
+    button.action {
+      margin-top: 8px;
+      padding: 6px 12px;
+    }
   </style>
 </head>
 
@@ -103,7 +116,7 @@
 <section id="progress">
   <h2>Progress</h2>
   <div class="block">
-    <p>⏱ ساعات مطالعه: ۱۸</p>
+    <p>⏱ ساعات مطالعه هفته: ۱۸</p>
     <p>✅ انجام‌شده: در حال محاسبه…</p>
   </div>
 </section>
@@ -112,44 +125,48 @@
   <h2>AI Assistant</h2>
   <div class="block">
     <p>سؤال برنامه‌ریزی‌ات را بنویس:</p>
-    <input id="aiInput" type="text" placeholder="مثلاً: امروز چطور درس بخونم؟"
-           style="width:100%;padding:8px;margin-top:8px;">
-    <button onclick="askAI()" style="margin-top:8px;">ارسال</button>
-    <p id="aiResponse" style="margin-top:12px;"></p>
+    <input id="aiInput" type="text" placeholder="مثلاً: امروز چطور درس بخونم؟">
+    <button class="action" onclick="askAI()">ارسال</button>
+    <p id="aiResponse"></p>
   </div>
 </section>
 
 <nav>
-  <button onclick="show('today')">Today</button>
-  <button onclick="show('daily')">Daily</button>
-  <button onclick="show('weekly')">Weekly</button>
-  <button onclick="show('progress')">Progress</button>
-  <button onclick="show('ai')">AI</button>
+  <button onclick="showPage('today')">Today</button>
+  <button onclick="showPage('daily')">Daily</button>
+  <button onclick="showPage('weekly')">Weekly</button>
+  <button onclick="showPage('progress')">Progress</button>
+  <button onclick="showPage('ai')">AI</button>
 </nav>
 
 <script>
-  function show(id) {
-    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  function showPage(id) {
+    document.querySelectorAll("section").forEach(section => {
+      section.classList.remove("active");
+    });
     document.getElementById(id).classList.add("active");
   }
 
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
     const key = cb.dataset.id;
     cb.checked = localStorage.getItem(key) === "true";
-    cb.onchange = () => localStorage.setItem(key, cb.checked);
+
+    cb.addEventListener("change", () => {
+      localStorage.setItem(key, cb.checked);
+    });
   });
-  <script>
+
   function askAI() {
-    const input = document.getElementById("aiInput").value;
+    const input = document.getElementById("aiInput");
     const response = document.getElementById("aiResponse");
 
-    if (!input) {
+    if (!input.value.trim()) {
       response.textContent = "لطفاً یک سؤال بنویس.";
       return;
     }
 
     response.textContent =
-      "من به‌زودی با هوش مصنوعی واقعی وصل می‌شوم و برایت برنامه دقیق می‌سازم.";
+      "این بخش آماده است. در مرحله بعد، هوش مصنوعی واقعی به آن وصل می‌شود.";
   }
 </script>
 
